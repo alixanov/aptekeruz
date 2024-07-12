@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Sell from "@mui/icons-material/CheckCircleOutline";
 
 const GetDori = () => {
   const basket = JSON.parse(localStorage.getItem("key")) || [];
-  const soldItemsFromStorage =
-    JSON.parse(localStorage.getItem("soldItems")) || [];
   const [dataBasket, setDataBasket] = useState(basket);
   const [inputValues, setInputValues] = useState({});
-  const [selectedItems, setSelectedItems] = useState(soldItemsFromStorage);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [customerCart, setCustomerCart] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const calculatedTotalPrice = customerCart.reduce(10.Cтиль в Css:
+      (total, item) => total + item.mijozuchunnarx * item.soni,
+      0
+    );
+    setTotalPrice(calculatedTotalPrice);
+  }, [customerCart]);
 
   const handleChange = (event, id) => {
     const newValue = event.target.value;
@@ -34,50 +42,71 @@ const GetDori = () => {
       );
 
       const newSoldItem = { ...item, soni: valueToSubtract };
-      const updatedSoldItems = [...selectedItems, newSoldItem];
+      const updatedCustomerCart = [...customerCart, newSoldItem];
 
       setDataBasket(updatedBasket);
-      setSelectedItems(updatedSoldItems);
+      setCustomerCart(updatedCustomerCart);
       localStorage.setItem("key", JSON.stringify(updatedBasket));
-      localStorage.setItem("soldItems", JSON.stringify(updatedSoldItems));
       setInputValues((prev) => ({ ...prev, [id]: "" }));
 
-      alert("Harid amalga oshirildi");
+      alert("Mahsulot savatchaga qo'shildi");
     } else {
-      alert("Notog'ri qiymat kiritildi ёки miqdор yetarli emas");
+      alert("Notog'ri qiymat kiritildi yoki miqdor yetarli emas");
     }
   };
 
-  const handlePurchase = () => {
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredItems = dataBasket.filter((item) =>
+    item.nomi.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleCompletePurchase = () => {
+    const existingSoldItems =
+      JSON.parse(localStorage.getItem("soldItems")) || [];
+    const updatedSoldItems = [...existingSoldItems, ...customerCart];
+    localStorage.setItem("soldItems", JSON.stringify(updatedSoldItems));
+    setCustomerCart([]);
+    setTotalPrice(0);
+    alert("Sotib olish amalga oshirildi");
     navigate("/omborxona");
   };
 
-  const totalPrice = selectedItems.reduce(
-    (total, item) => total + item.mijozuchunnarx * item.soni,
-    0
-  );
-
   return (
     <div className="sotuv__bolim-oynasi">
+      <div className="dorilar__qidiruv-oynasi">
+        <div className="dorilar__qidiruv-bolimi">
+          <input
+            type="text"
+            id="search"
+            placeholder="Mahsulot nomini kiriting"
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+          <button>Search</button>
+        </div>
+      </div>
       <table className="get__dori-page">
         <thead>
           <tr>
             <th>Id</th>
             <th>Nomi</th>
             <th>Turi</th>
-            <th>Asl narx</th>
+            {/* <th>Asl narx</th> */}
             <th>Mijoz uchun narx</th>
             <th>Soni</th>
             <th>Haridni yakunlash</th>
           </tr>
         </thead>
         <tbody>
-          {dataBasket.map((item, index) => (
+          {filteredItems.map((item, index) => (
             <tr key={item.id}>
               <td>{index + 1}</td>
               <td>{item.nomi}</td>
               <td>{item.katigoriya}</td>
-              <td>{item.aslnarxi}</td>
+              {/* <td>{item.aslnarxi}</td> */}
               <td>{item.mijozuchunnarx}</td>
               <td id="sell">
                 <p>{item.soni}</p>
@@ -101,16 +130,11 @@ const GetDori = () => {
       <div className="sotuv__savatchasi">
         <p>Savat</p>
         <div className="mijoz__harid-cardi">
-          {selectedItems.map((item, index) => (
-            <div key={index} className="card__item">
-              <p>{item.nomi}</p>
-              <p>{item.soni} dona</p>
-              <p>Jami narx: {item.mijozuchunnarx * item.soni} so'm</p>
-            </div>
+          {customerCart.map((item, index) => (
+            <p key={index}>
+              {item.nomi} - {item.soni} dona
+            </p>
           ))}
-        </div>
-        <div className="total__price">
-          <p>Umumiy narxi: {totalPrice} so'm</p>
         </div>
         <button
           style={{
@@ -123,10 +147,15 @@ const GetDori = () => {
             borderRadius: 8,
             fontSize: "20px",
           }}
-          onClick={handlePurchase}
+          onClick={handleCompletePurchase}
         >
           Sotib yuborish
         </button>
+        <div className="total__price" style={{ marginTop: 10 }}>
+          <h3 style={{ color: "gray" }}>
+            Mijoz uchun umumiy narx: {totalPrice} sum
+          </h3>
+        </div>
       </div>
     </div>
   );

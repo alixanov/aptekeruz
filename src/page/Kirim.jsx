@@ -80,6 +80,7 @@ const Kirim = () => {
               <option value="Sirop">Sirop</option>
               <option value="Parashok">Parashok</option>
               <option value="Maz">Maz</option>
+              <option value="Sprey">Sprey</option>
             </select>
             <button type="submit">Kirim</button>
           </form>

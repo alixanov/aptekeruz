@@ -27,7 +27,7 @@ body {
 .sidebar {
   width: 100%;
   height: 100vh;
-  background-color:crimson;
+  background-color:#222222;
   display: flex;
   align-items: center;
   /* justify-content: center; */
@@ -42,6 +42,7 @@ body {
   border-radius: 8px;
   border: none;
   font-weight: 500;
+  color: #222222;
 }
 .sidebar > button:hover{
   background-color: rgb(255, 221, 227);
@@ -65,7 +66,7 @@ body {
     /* justify-content: center; */
   flex-direction: column;
   padding: 1% 5%;
-  background-image: url(./assets/bg__color.jpg);
+  background-image: url(./assets/bg___color.jpg);
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -150,12 +151,57 @@ gap: 33px ;
 }
 /* Rodal page end */  
 /* Get dori start page */
+.sotuv__bolim-oynasi {
+  width: 100%;
+  height: 99vh;
+  display: flex;
+  align-items: start;
+  /* justify-content: center; */
+flex-direction: column;
+/* background-color: slateblue; */
+}
+.dorilar__qidiruv-oynasi{
+  width: 100%;
+  display: flex;
+  align-items: end;
+  justify-content: end;
+}
+.dorilar__qidiruv-bolimi {
+  width: 400px;
+  height: 51px;
+      background-color: #222222;
+          border-radius: 8px;
 
+
+}
+.dorilar__qidiruv-bolimi > input {
+  width: 280px;
+  height: 51px;
+  border: none;
+  outline: none;
+  font-size: 21px;
+    background-color: #222222;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    text-indent: 8px;
+    color: white;
+    padding-right: 10px;
+
+}
+.dorilar__qidiruv-bolimi > button {
+  width: 111px;
+  height: 37px;
+  background-color: white;
+  border: none;
+  font-size: 21px;
+  border-radius: 8px;
+}
 .get__dori-page  {
   width: 100%;
   border: solid 1px #FF5733; 
   border-collapse: collapse;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);     
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;     
 }
 
 .get__dori-page > thead {
@@ -279,10 +325,12 @@ gap: 33px ;
 }
 
 .sotuv__savatchasi {
+  /* width: 100%; */
   display: flex;
   align-items: start  ;
   justify-content: center;
   flex-direction: column;
+  gap: 7px;
 }
 .sotuv__savatchasi, .card__item ,.total__price{
   font-size: 19px;
