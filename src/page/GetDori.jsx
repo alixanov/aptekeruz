@@ -12,7 +12,7 @@ const GetDori = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const calculatedTotalPrice = customerCart.reduce(10.Cтиль в Css:
+    const calculatedTotalPrice = customerCart.reduce(
       (total, item) => total + item.mijozuchunnarx * item.soni,
       0
     );
